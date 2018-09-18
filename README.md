@@ -11,5 +11,5 @@ UML Design: https://docs.google.com/spreadsheets/d/1Cjc-qTKjpbfnhzhgXTGr107GFHqs
 
 https://www.draw.io/
 
-github password : Kilo1q
+marvin git repo password : Kilo1q
 
