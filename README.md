@@ -1,4 +1,4 @@
-# CS440Project
+# CS440Project - Automated Anesthesiology Development and Ozil Coding Project
 CS440 private github repo 2018
 
 Important Links
