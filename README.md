@@ -13,6 +13,16 @@ https://www.draw.io/
 
 marvin git repo password : Kilo1q
 
+UML Diagram for Ozil 
+
+![capture1](https://user-images.githubusercontent.com/16420802/46299780-bd1e8f00-c567-11e8-8a38-8c498b956f51.JPG)
+
+
 
 
 ![cluster 2fword web 3](https://user-images.githubusercontent.com/16420802/46243268-fbfdea80-c397-11e8-9e93-b5fa4d3bd7b6.png)
+
+
+
+
+
