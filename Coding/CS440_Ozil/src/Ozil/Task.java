@@ -1,6 +1,6 @@
 package Ozil;
 
-public class Task implements Serializable{
+public class Task {
 	
 	
 	private String TaskName;
