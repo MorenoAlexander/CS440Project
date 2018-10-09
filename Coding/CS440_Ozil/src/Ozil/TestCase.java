@@ -3,7 +3,7 @@ package Ozil;
 
 
 
-public Class TestCase implements Serializable {
+public class TestCase implements Serializable {
  
   private String testCaseTitle;
   private String testCaseDescription;
