@@ -9,106 +9,44 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
 public class main {
+	private static User currentUser;
+	static ArrayList<String> Ts = new ArrayList<String>();
+
 	
-	private static Connection con;
-	private static boolean existingDB =  false;
-	//private static SQLManager dbInterface = new SQLManager("jdbc:sqlite:OzilUsersDB.db")
+	private static SQLManager dbInterface;
+	
 	
 	
 
 	
 	
-	
 
-
-	
-	
-	public ResultSet checkForDB()  {
+	private static  void setdb()
+	{
+		Ts.add("CREATE TABLE users(userId integer,fName varchar(60),lName varchar(60),email varchar(60),password varchar(64),primary key(userId));");
+		Ts.add("CREATE TABLE projects(projectId INTEGER, projectTitle VARCHAR(60),data BLOB, PRIMARY KEY(projectId); ");
+		Ts.add("CREATE TABLE user_projects("
+				+ "index INTEGER,"
+				+ "userId INTEGER NOT NULL,"
+				+ "projectId INTEGER NOT NULL"
+				+ "PRIMARY KEY(index),"
+				+ "FOREIGN KEY(userId) REFERENCES users(userId),"
+				+ "FOREIGN KEY(projectId) REFERENCES projects(projectID));");
 		
-		if(con == null)
-		{
-			//Check for our databases, could be remade for remote connection to a database later, for now we will use a two local databases
-			try {
-				getConnection();
-			} catch (ClassNotFoundException | SQLException e) {
-				
-				e.printStackTrace();
-			}
-		}
-		
-		Statement state = null;
-		try {
-			state = con.createStatement();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		ResultSet res = null;
-		try {
-			res = state.executeQuery("SELECT fname, lname FROM users");
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return res;
-	}
-	
-	
-
-	private static void getConnection() throws ClassNotFoundException, SQLException {
-		Class.forName("org.sqlite.JDBC");
-		con = DriverManager.getConnection("jdbc:sqlite:OzilUsersDB.db");
-		//Add another line for project Database
-		initalize();
-		
+		dbInterface = new SQLManager("OzilUsersDB.db",
+				   "SELECT name FROM sqlite_master WHERE type='table' AND name='users'",Ts);
 	}
 
 
 	/*
 	 * Initialize an empty data base
 	 */
-	private static void initalize() throws SQLException {
-		if(!existingDB == true)
-		{
-			existingDB = true;
-			
-			Statement state = con.createStatement();
-			ResultSet res = state.executeQuery("SELECT name FROM sqlite_master WHERE type='table' AND name='users'");
-			
-			if(!res.next() )
-			{
-				System.out.println("No Pre-Existing user database found, building new database now...");
-				
-				Statement state1 = con.createStatement();
-				state1.executeQuery("CREATE TABLE users(userId integer,"
-						+ "fName varchar(60),"
-						+ "lName varchar(60),"
-						+ "email varchar(60),"
-						+ "password varchar(64),"
-						+ "primary key(userId))"
-						+ ";");
-				state1.executeQuery("CREATE TABLE projects(projectId INTEGER,"
-						+ " projectTitle VARCHAR(60),data BLOB, PRIMARY KEY(projectId); ");
-				
-				
-				
-				state1.executeQuery("CREATE TABLE user_projects("
-						+ "index INTEGER,"
-						+ "userId INTEGER NOT NULL,"
-						+ "projectId INTEGER NOT NULL"
-						+ "PRIMARY KEY(index),"
-						+ "FOREIGN KEY(userId) REFERENCES users(userId),"
-						+ "FOREIGN KEY(projectId) REFERENCES projects(projectID));");
-			}
-		}
-		
-		
-		
-		
-	}
+
 	
 	
 	/**
@@ -121,12 +59,12 @@ public class main {
 	 */
 	private static int  addUser(String firstName, String lastName, String email,String passwrd) throws ClassNotFoundException, SQLException
 	{
-		if(con == null)
+		if(dbInterface.getCon() == null)
 		{
-			getConnection();
+			return -1;
 		}
 		
-		PreparedStatement prep = con.prepareStatement("INSERT INTO users values(?, ?, ?, ?, ?);");
+		PreparedStatement prep = dbInterface.preparedStatement("INSERT INTO users values(?, ?, ?, ?, ?);");
 		prep.setString(2, firstName);
 		prep.setString(3, lastName);
 		prep.setString(4, email);
@@ -134,16 +72,11 @@ public class main {
 		prep.execute();
 		
 		
-		ResultSet id = null;
-		Statement st = con.createStatement();
-		id = st.executeQuery("SELECT userId FROM users WHERE fName ='"+firstName + "'AND lName = '"+lastName+"' AND email='"+email+"';");
+		ResultSet id  = dbInterface.executeQuery("SELECT userId FROM users WHERE fName ='"+ firstName + "'AND lName = '"+lastName+"' AND email='"+email+"';");
 		//sql query to return user ID
 		
 		return id.getInt(1);
 	}
-	
-	
-	
 	
 	
 	/***
@@ -227,9 +160,8 @@ public class main {
 				
 				//sqlmanager.executeQuery();
 				
-				ResultSet set = null;
-				Statement statement  = con.createStatement();
-				set = statement.executeQuery("SELECT password,fName,lName,userId FROM users WHERE email= '"+ userEmail + "'; ");
+				ResultSet set = dbInterface.executeQuery("SELECT password,fName,lName,userId FROM users WHERE email= '"+ userEmail + "'; ");
+				System.out.print(set.getString(1));
 				if(set.getString(1).isEmpty() == true)
 				{
 					System.out.println("No user with such email.");
@@ -242,6 +174,7 @@ public class main {
 				}
 				else
 				{
+					System.out.print(set.getString(1));
 					System.out.println("Entered the wrong password.");
 				}
 				
@@ -295,7 +228,9 @@ public class main {
 				
 			}
 			else if(UserInput.toLowerCase().equals("exit") || UserInputNumerical == 3)
-			{
+			{	
+				System.out.println("Exiting Ozil Application...");
+				System.exit(0);
 				
 				return null;
 			}
@@ -311,7 +246,7 @@ public class main {
 	static public String[] getCommand(Scanner input)
 	{
 		String command = "";
-		System.out.print(">>\n");
+		System.out.print(">>");
 		command = input.nextLine();
 		String[] cargsv = command.split(" ");
 		return cargsv;
@@ -323,41 +258,59 @@ public class main {
 	
 	
 	
+	
+	
+	/**
+	 * Displays the current users information
+	 * command line key: myInfo
+	 * 
+	 */
+	private static void displayUserInfo(String[] args)
+	{
+		
+		System.out.println("Displaying user data for " + currentUser.getFullName()+" :");
+		currentUser.printInfo();
+		
+	}
+	
 	public static void main(String[] args) throws ClassNotFoundException, SQLException {
 		//TODO set up command line loop
 		Scanner userInputStream = new Scanner(System.in);
-		User currentUser =  null;
+		currentUser =  null;
 		String UserInput;
 		int UserInputNumerical;
+		
+		setdb();
 		//
 		System.out.println("Welcome to the Ozil Project Management software!");
 		//connect to database
-		if(con == null)
+		if(dbInterface.getCon() == null)
 		{
-			try {
-				getConnection();
-			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
-				System.exit(-1);
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				System.exit(-1);
-			}
+			dbInterface.getCon();
 		}
 		
 		
 		//Signin/signup
 		currentUser = registerCurrentUser(userInputStream);
-		System.out.println("Welcome" + currentUser.getFullName() + ".");
+		System.out.println("Welcome " + currentUser.getFullName() + ".");
 		
 		
-		String[] cargsv = getCommand(userInputStream);
+		String[] cargsv = {""};
 		while(!cargsv[0].toLowerCase().equals("exit"))
 		{
+			cargsv = getCommand(userInputStream);
 			switch(cargsv[0].toLowerCase())
 			{
-				
+			case "myinfo":
+				displayUserInfo(cargsv);
+				break;
+			case "exit":
+				System.out.print("Exiting Ozil Application...");
+				userInputStream.close();
+				System.exit(0);
+				break;
+			default:
+				System.out.println("Unknown command \""+cargsv[0]+"\". Check spelling.");
 			}
 		}
 		
@@ -366,11 +319,6 @@ public class main {
 		userInputStream.close();
 		System.exit(0);
 	}
-
-
-
-
-
 }
 
 
