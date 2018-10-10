@@ -5,10 +5,10 @@ package Ozil;
 
 
 public class User {
-	private String FirstName;
-	private String LastName;
-	private String EmailID; //should be alphanumeric
-	private int userID; //init when connecting to database
+	protected String FirstName;
+	protected String LastName;
+	protected String EmailID; //should be alphanumeric
+	protected int userID; //init when connecting to database
 	
 	
 	
@@ -22,7 +22,7 @@ public class User {
 		EmailID = emailID;
 	}
 	/*
-	 * set the name of the user and
+	 * set the name of the user
 	 */
 	public void Name(String firstName, String lastName)
 	{
@@ -44,7 +44,9 @@ public class User {
 		System.out.println("User email: "+EmailID);
 		System.out.println("User ID : "+userID);
 		
+		System.out.println("Your projects: ");
 		
+		System.out.println("\tFIXME: Replace with projects from sql");
 	}
 	
 	public void setUserID(int newID)
@@ -63,6 +65,15 @@ public class User {
 		return (this.FirstName + " " + this.LastName);
 	}
 	
+	public String getFirstName()
+	{
+		return this.FirstName;
+	}
+	
+	public String getLastName()
+	{
+		return this.LastName;
+	}
 	
 	
 }
