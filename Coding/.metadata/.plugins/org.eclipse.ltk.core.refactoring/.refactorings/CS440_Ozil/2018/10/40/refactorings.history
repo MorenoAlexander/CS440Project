@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Encapsulate field &apos;Ozil.SQLManager.con&apos; in &apos;Ozil.SQLManager&apos;&#x0D;&#x0A;- Original project: &apos;CS440_Ozil&apos;&#x0D;&#x0A;- Original element: &apos;Ozil.SQLManager.con&apos;&#x0D;&#x0A;- Getter method name: &apos;getCon&apos;&#x0D;&#x0A;- Setter method name: &apos;setCon&apos;&#x0D;&#x0A;- Field visibility: &apos;public&apos;&#x0D;&#x0A;- Use getter and setter methods in declaring type" comments="false" declaring="true" description="Encapsulate field &apos;con&apos;" flags="589830" getter="getCon" id="org.eclipse.jdt.ui.self.encapsulate" input="/src&lt;Ozil{SQLManager.java[SQLManager^con" insertion="2" setter="setCon" stamp="1538408384588" version="1.0" visibility="1"/>
+</session>
