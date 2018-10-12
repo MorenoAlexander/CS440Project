@@ -5,11 +5,15 @@ Important Links
 
 Scenario: https://docs.google.com/document/d/1VqCTF1GFU3kV6K1NjagUT5upcODjEUdih_ZofGVI1VE/edit?usp=sharing
 
-Project Report: https://docs.google.com/document/d/1bypIdUs4WxwGF0_6GpeXy2Y8K5XPI1WeUQnaN8iaj58/edit?usp=sharing
-
 UML Design: https://docs.google.com/spreadsheets/d/1Cjc-qTKjpbfnhzhgXTGr107GFHqs31vv_PfAA2wtU7A/edit?usp=sharing
 
-https://www.draw.io/
+
+****New****
+Second Release Summary: https://docs.google.com/document/d/17SjoOfN8R3QdW5xZp0v9_F09aWT4M1tLmAME1mQNcSE/edit?usp=sharing
+
+
+
+//------------------------------------------------------------------------------------------
 
 marvin git repo password : Kilo1q
 
