@@ -17,6 +17,8 @@ Second Release Summary: https://docs.google.com/document/d/17SjoOfN8R3QdW5xZp0v9
 
 marvin git repo password : Kilo1q
 
+UML for A Squared
+
 ![a-squared uml](https://user-images.githubusercontent.com/16420802/47695281-4ceb4380-dbcf-11e8-9de0-c3e9f323eef2.jpeg)
 
 
