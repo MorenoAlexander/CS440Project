@@ -24,6 +24,9 @@ UML for A Squared
 
 Product Use Case for A Squared
 
+![product use case](https://user-images.githubusercontent.com/16420802/47697020-41037f80-dbd7-11e8-8945-35074c49fb1f.jpeg)
+
+
 
 UML Diagram for Ozil 
 
