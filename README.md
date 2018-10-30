@@ -22,6 +22,9 @@ UML for A Squared
 ![a-squared uml](https://user-images.githubusercontent.com/16420802/47695281-4ceb4380-dbcf-11e8-9de0-c3e9f323eef2.jpeg)
 
 
+Product Use Case for A Squared
+
+
 UML Diagram for Ozil 
 
 ![capture1](https://user-images.githubusercontent.com/16420802/46299780-bd1e8f00-c567-11e8-8a38-8c498b956f51.JPG)
